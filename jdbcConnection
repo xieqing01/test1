@@ -1,0 +1,25 @@
+public class Test{
+   public static void main(String[] args){
+      final String userName = "root";
+      final String passWord = "123";
+      final String url = "jdbc:mysql://localhost:3306/crm";
+      Connection con = null;
+      PreparedStatement pmt = null;
+      try{
+          Class.forName("com.mysql.jdbc.Driver");
+          con = DriverManager.getConnection(url,userName,passWord);
+          String sql ="select username from sys_user";
+          pmt = con.prepareStatement(sql);
+          ResultSet set = pmt.executeQuery();
+          while(set.naxt()){
+             System.out.println(set.getString(1));
+          }
+          con.close();
+          
+      }catch(ClassNotFoundException e){
+         System.out.println("驱动类不存在! ");
+      }catch(SQLException e){
+         System.out.println("执行sql操作异常! ");
+      }
+   }
+}
